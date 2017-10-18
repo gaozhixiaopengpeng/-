@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="style/reset.css">
+	<style type="text/css" media="screen">
+		#list{
+			width: 280px;
+			height: 100px;
+			margin: 100px auto;
+		}
+		.rating-itme{
+			float: left;
+			width: 26px;
+			height: 26px;
+			background: url(images/bg.png) no-repeat;
+			margin-right: 10px;
+		}
+	</style>
+</head>
+<body>
+	<ul class="list" id="list">
+		<li class="rating-itme" titile=""></li>
+		<li class="rating-itme" titile=""></li>
+		<li class="rating-itme" titile=""></li>
+		<li class="rating-itme" titile=""></li>
+		<li class="rating-itme" titile=""></li>
+	</ul>
+	<script src="./jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+		/*
+			$(this).css('background-position', '0 -41px')
+		 */
+		var num = 2,
+			$item = $('#list').find('.rating-itme')
+		function lightOn (num) {
+			$item.each(function (index) {
+				if (index < num) {
+					$(this).css('background-position', '0 -41px')
+				} else {
+					$(this).css('background-position', '0 0')
+				}
+			})
+		}
+
+		lightOn(num);
+
+		$item.on('mouseover', function () {
+			lightOn($(this).index() + 1);
+		}).on('click', function () {
+			num = $(this).index() + 1;
+		})
+		$('#list').on('mouseout', function () {
+			lightOn(num)
+		})
+	</script>
+</body>
+</html>

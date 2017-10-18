@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="style/reset.css">
+	<style type="text/css" media="screen">
+		.list{
+			width: 280px;
+			height: 100px;
+			margin: 100px auto;
+		}
+		.rating-itme{
+			float: left;
+			width: 26px;
+			height: 26px;
+			background: url(images/bg.png) no-repeat;
+			margin-right: 10px;
+		}
+	</style>
+</head>
+<body>
+	<ul class="list" id="list">
+		<li class="rating-itme" titile=""></li>
+		<li class="rating-itme" titile=""></li>
+		<li class="rating-itme" titile=""></li>
+		<li class="rating-itme" titile=""></li>
+		<li class="rating-itme" titile=""></li>
+	</ul>
+
+	<ul class="list" id="list2">
+		<li class="rating-itme" titile=""></li>
+		<li class="rating-itme" titile=""></li>
+		<li class="rating-itme" titile=""></li>
+		<li class="rating-itme" titile=""></li>
+		<li class="rating-itme" titile=""></li>
+	</ul>	
+	<script src="./jquery-3.2.1.js"></script>
+	<script type="text/javascript">
+		var rating = (function () {	
+			function lightOn ($item, num) {
+				$item.each(function (index) {
+					if (index < num) {
+						$(this).css('background-position', '0 -41px')
+					} else {
+						$(this).css('background-position', '0 0')
+					}
+				})
+			}			
+
+			// 初始化
+			var init = function (el, num) {
+				var	$list = $(el),
+					$item = $list.find('.rating-itme')
+				lightOn($item, num);		
+
+				$list.on('mouseover', '.rating-itme', function () {
+					lightOn($item, $(this).index() + 1);
+				})
+				$list.on('click', '.rating-itme', function () {
+					num = $(this).index() + 1;
+				})
+				$list.on('mouseout', function () {
+					lightOn($item, num)
+				})								
+			}
+			// jquery的插件
+			$.fn.extend({
+				rating: function (num) {
+					return this.each(function () {
+						init(this, num)
+					})
+				}
+			});
+
+			return {
+				init: init
+			}					
+		})()
+
+		rating.init($('#list'), 2);
+		// rating.init($('#list2'), 3)
+		$('#list2').rating(3);
+	</script>
+</body>
+</html>
